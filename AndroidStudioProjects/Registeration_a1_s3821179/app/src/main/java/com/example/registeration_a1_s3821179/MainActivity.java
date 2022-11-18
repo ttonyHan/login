@@ -1,3 +1,5 @@
+//s3821179 sang yeob,han 
+
 package com.example.registeration_a1_s3821179;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,3 +16,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
