@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "notes")
+@Entity(tableName = "notesdb")
 public class Notes implements Serializable {
 
-    //columnes in the database
+    //column in the database
     @PrimaryKey(autoGenerate = true)
     int ID = 0;
 
@@ -21,7 +21,7 @@ public class Notes implements Serializable {
     String notes = " ";
 
     @ColumnInfo(name = "createdDate")
-    String createdDate = "";
+    String createdDate = " ";
 
     @ColumnInfo(name = "pin")
     boolean pin = false;

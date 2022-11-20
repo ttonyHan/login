@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <!--Note title-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,7 +37,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-
                 />
 
 

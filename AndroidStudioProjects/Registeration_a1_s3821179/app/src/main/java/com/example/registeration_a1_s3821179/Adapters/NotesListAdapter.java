@@ -78,6 +78,16 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder>{
         });
     }
 
+    //returning list from list<Notes>
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public void filterList(List<Notes> filteredList){
+        list = filteredList;
+        notifyDataSetChanged();
+    }
 
     //get color
     private int getRandomColor(){
@@ -90,16 +100,9 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder>{
         colorCode.add(R.color.color5);
 
         Random random = new Random();
-
         int random_color = random.nextInt(colorCode.size());
 
-        return random_color;
-    }
-
-    //returning list from list<Notes>
-    @Override
-    public int getItemCount() {
-        return list.size();
+        return colorCode.get(random_color);
     }
 }
 

@@ -8,9 +8,19 @@
     android:background="@color/black"
     tools:context=".MainActivity">
 
-    <view
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView_home"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:background="@color/gray"
+        app:queryHint="Search Notes from here"
+        app:iconifiedByDefault="false"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home"
-        class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_below="@+id/searchView_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp" />
@@ -23,6 +33,5 @@
         android:layout_margin="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_notes"
-        />
+        android:src="@drawable/ic_add_notes"/>
 </RelativeLayout>

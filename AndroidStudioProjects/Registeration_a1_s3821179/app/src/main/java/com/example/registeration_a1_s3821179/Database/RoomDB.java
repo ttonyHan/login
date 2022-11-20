@@ -1,18 +1,16 @@
 package com.example.registeration_a1_s3821179.Database;
 
 import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
 import com.example.registeration_a1_s3821179.Models.Notes;
 
 @Database(entities = Notes.class, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
 
     private static RoomDB database;
-    private static String DATABASE_NAME = "NoteApp";
+    private static final String DATABASE_NAME = "NoteAppDB";
 
     //method to get the instance of database
     public synchronized static RoomDB getInstance(Context context){
@@ -28,5 +26,4 @@ public abstract class RoomDB extends RoomDatabase {
     }
 
     public abstract MainDAO mainDAO();
-
 }
