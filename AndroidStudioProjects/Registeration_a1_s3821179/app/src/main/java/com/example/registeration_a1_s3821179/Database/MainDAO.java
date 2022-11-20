@@ -22,13 +22,14 @@ public interface MainDAO {
     @Query("SELECT * FROM notesdb ORDER BY id DESC")
     List<Notes> getAllNotes();
 
-    //update notes
+    //edit notes
     @Query("UPDATE notesdb SET title = :title, notes = :notes WHERE ID = :id")
     void updateNotes(int id, String title, String notes);
 
     @Delete
     void deleteNotes(Notes notes);
 
+    //pin/unpin
     @Query("UPDATE notesdb SET pin = :pin WHERE ID= :id")
     void pin(int id,boolean pin);
 

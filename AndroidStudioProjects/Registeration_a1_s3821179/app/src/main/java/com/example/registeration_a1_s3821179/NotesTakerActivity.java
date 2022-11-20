@@ -1,9 +1,6 @@
 package com.example.registeration_a1_s3821179;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import com.example.registeration_a1_s3821179.Models.Notes;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,7 +30,7 @@ public class NotesTakerActivity extends AppCompatActivity {
 
         notes = new Notes();
 
-        //casting issue
+        //casting issue..
         try {
             notes = (Notes) getIntent().getSerializableExtra("old_note");
             editText_title.setText(notes.getTitle());
@@ -51,23 +45,24 @@ public class NotesTakerActivity extends AppCompatActivity {
                 String title = editText_title.getText().toString();
                 String description = editText_notes.getText().toString();
 
+                //show pop up if title is empty
                 if(title.isEmpty()){
                     Toast.makeText(NotesTakerActivity.this, "Please add Title for your note.",Toast.LENGTH_SHORT).show();
                     return ;
                 }
 
-
+                //show pop up if note is empty
                 if(description.isEmpty()){
                     Toast.makeText(NotesTakerActivity.this, "Please add description for your note.",Toast.LENGTH_SHORT).show();
                             return ;
                 }
 
-                //create date
+                //created date
                 SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MM yyyy HH:mm a");
                 Date date = new Date();
 
+                //create and set object for notes if it is not old note
                 if(!isOldnote){
-                    //create and set object for notes if it is not old note
                     notes = new Notes();
                 }
 
@@ -80,8 +75,6 @@ public class NotesTakerActivity extends AppCompatActivity {
                 intent.putExtra("note",notes);
                 setResult(Activity.RESULT_OK,intent);
                 finish();
-
-
             }
         });
     }

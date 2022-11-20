@@ -1,3 +1,6 @@
+/*
+Edited by s3821179 sang yeob,Han
+*/
 
 package com.example.registeration_a1_s3821179;
 
@@ -37,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     List<Notes> notes = new ArrayList<>();
     //object for room db
     RoomDB database;
+    //adding new note btn
     FloatingActionButton fab_add;
+    //for search bar
     SearchView searchView_home;
     //for longclick
     Notes selectedNote;
@@ -70,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         searchView_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void filter(String newText) {
-        //new list
+        //create new list
         List<Notes> filteredList = new ArrayList<>();
         for(Notes singleNote : notes ){
             if(singleNote.getTitle().toLowerCase().contains(newText.toLowerCase())
@@ -157,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
+            //if it is pinned/unpiined
             case R.id.pin:
                 if(selectedNote.isPin()){
                     database.mainDAO().pin(selectedNote.getID(),false);
@@ -173,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                 return true;
 
+            //if it's deleted
             case R.id.delete:
                 database.mainDAO().deleteNotes(selectedNote);
                 notes.remove(selectedNote);

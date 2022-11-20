@@ -1,3 +1,10 @@
+/*
+using Room for db, i added dependency for Room in
+ Gradle Scripts -> build.gradle(Module)
+
+Edited by s3821179 sang yeob,Han
+*/
+
 package com.example.registeration_a1_s3821179.Database;
 
 import android.content.Context;
