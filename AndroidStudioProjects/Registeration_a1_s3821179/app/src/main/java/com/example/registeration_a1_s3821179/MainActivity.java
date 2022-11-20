@@ -3,6 +3,7 @@ package com.example.registeration_a1_s3821179;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +14,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.registeration_a1_s3821179.Adapters.NotesListAdapter;
 import com.example.registeration_a1_s3821179.Database.RoomDB;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     //create object for recyclerview, notelistadpater
     RecyclerView recyclerView;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     RoomDB database;
     FloatingActionButton fab_add;
     SearchView searchView_home;
+    //for longclick
+    Notes selectedNote;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +100,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //check for request call
+        //check for request call(create note)
         if(requestCode==101){
-//            if(requestCode == Activity.RESULT_OK){
-                Notes new_notes = (Notes) data.getSerializableExtra("note");
-                database.mainDAO().insertNotes(new_notes);
-                notes.clear();
-                notes.addAll(database.mainDAO().getAllNotes());
-                notesListAdapter.notifyDataSetChanged();
-//            }
+            Notes new_notes = (Notes) data.getSerializableExtra("note");
+            database.mainDAO().insertNotes(new_notes);
+            notes.clear();
+            notes.addAll(database.mainDAO().getAllNotes());
+            notesListAdapter.notifyDataSetChanged();
+        }
+        //request(102) editing the note
+        else if(requestCode==102){
+            Notes new_notes = (Notes) data.getSerializableExtra("note");
+            database.mainDAO().updateNotes(new_notes.getID(),new_notes.getTitle(),new_notes.getNotes());
+            notes.clear();
+            notes.addAll(database.mainDAO().getAllNotes());
+            notesListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -117,15 +129,62 @@ public class MainActivity extends AppCompatActivity {
     private final NotesClickListener notesClickListener = new NotesClickListener() {
         @Override
         public void onClick(Notes notes) {
+            Intent intent = new Intent(MainActivity.this,NotesTakerActivity.class);
+            //passing item from homescreen to edit page
+            intent.putExtra("old_note",notes);
+            //passing different request code from privious
+            startActivityForResult(intent,102);
 
         }
 
         @Override
         public void onLongClick(Notes notes, CardView cardView) {
-
+            selectedNote = new Notes();
+            selectedNote = notes;
+            showPopup(cardView);
         }
     };
 
+    //popup for long click listener
+    private void showPopup(CardView cardView) {
+        PopupMenu popupMenu = new PopupMenu(this,cardView);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu);
+        popupMenu.show();
+    }
 
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.pin:
+                if(selectedNote.isPin()){
+                    database.mainDAO().pin(selectedNote.getID(),false);
+                    Toast.makeText(MainActivity.this, "Note has been Unpinned.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    database.mainDAO().pin(selectedNote.getID(),true);
+                    Toast.makeText(MainActivity.this, "Note has been Pinned.", Toast.LENGTH_SHORT).show();
+                }
+
+                notes.clear();
+                notes.addAll(database.mainDAO().getAllNotes());
+                notesListAdapter.notifyDataSetChanged();
+
+                return true;
+
+            case R.id.delete:
+                database.mainDAO().deleteNotes(selectedNote);
+                notes.remove(selectedNote);
+                notesListAdapter.notifyDataSetChanged();
+
+                Toast.makeText(MainActivity.this, "Note has been deleted.", Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            default:
+                return false;
+        }
+    }
 }
 
