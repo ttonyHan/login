@@ -17,8 +17,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.registeration_a1_s3821179.Adapters.NotesListAdapter;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+
 
     //create object for recyclerview, notelistadpater
     RecyclerView recyclerView;
@@ -48,10 +51,25 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     Notes selectedNote;
 
 
+    Handler handler;
+    Runnable runnable;
+    ImageView splashImg;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        splashImg = findViewById(R.id.splash_img);
+//        splashImg.animate().alpha(0).setDuration(0);
+//
+//        handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                finish();
+//            }
+//        },4000);
 
         recyclerView = findViewById(R.id.recycler_home);
         fab_add = findViewById(R.id.fab_add);
